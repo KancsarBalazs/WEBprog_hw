@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <title>Táblázat</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="tablescript.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>Web-programozás-1 Előadás Házi feladat</h1>
+</header>
+
+<nav>
+  <a href="index.html">Főoldal</a>
+  <a href="table.html" class="active">Táblázat</a>
+</nav>
+
+<aside>
+  <p>Adatkezelés</p>
+</aside>
+
+<div class="content">
+  <h2>CRUD Táblázat</h2>
+  <form id="data-form">
+    <input type="text" id="name" placeholder="Név" required minlength="2">
+    <input type="number" id="age" placeholder="Kor" required min="1" max="120">
+    <input type="text" id="city" placeholder="Város" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <button type="submit">Hozzáadás</button>
+  </form>
+
+  <input type="text" id="search" placeholder="Keresés minden oszlopban">
+
+  <table id="data-table" border="1">
+    <thead>
+      <tr>
+        <th onclick="sortTable(0)">Név</th>
+        <th onclick="sortTable(1)">Kor</th>
+        <th onclick="sortTable(2)">Város</th>
+        <th onclick="sortTable(3)">Email</th>
+        <th>Művelet</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>Anna Virág</td>
+          <td>21</td>
+          <td>Szeged</td>
+          <td>annavir4g@example.com</td>
+          <td><button onclick="deleteRow(this)">Törlés</button></td>
+        </tr>
+        <tr>
+          <td>Dániel Kovács</td>
+          <td>35</td>
+          <td>Debrecen</td>
+          <td>dani245546@example.com</td>
+          <td><button onclick="deleteRow(this)">Törlés</button></td>
+        </tr>
+        <tr>
+          <td>Júlia Tóth</td>
+          <td>29</td>
+          <td>Budapest</td>
+          <td>juliaaa@example.com</td>
+          <td><button onclick="deleteRow(this)">Törlés</button></td>
+        </tr>
+        <tr>
+          <td>Péter Szabó</td>
+          <td>42</td>
+          <td>Pécs</td>
+          <td>peter.szabo@example.com</td>
+          <td><button onclick="deleteRow(this)">Törlés</button></td>
+          <tr>
+            <td>Egyed Endre</td>
+            <td>37</td>
+            <td>Szeged</td>
+            <td>e.endre@example.com</td>
+            <td><button onclick="deleteRow(this)">Törlés</button></td>
+          </tr>
+          <tr>
+            <td>Illés János</td>
+            <td>44</td>
+            <td>Debrecen</td>
+            <td>janosk@example.com</td>
+            <td><button onclick="deleteRow(this)">Törlés</button></td>
+          </tr>
+          <tr>
+            <td>Bálint Dezső</td>
+            <td>16</td>
+            <td>Budapest</td>
+            <td>balint.dezso@example.com</td>
+            <td><button onclick="deleteRow(this)">Törlés</button></td>
+          </tr>
+          <tr>
+            <td>Hajdú Ferenc</td>
+            <td>52</td>
+            <td>Pécs</td>
+            <td>ferenc.hajdu@example.com</td>
+            <td><button onclick="deleteRow(this)">Törlés</button></td>
+        </tr>
+      </tbody>
+  </table>
+</div>
+
+<footer>
+  Készítette: Kiss Ágnes és XY1234
+</footer>
+
+</body>
+</html>
