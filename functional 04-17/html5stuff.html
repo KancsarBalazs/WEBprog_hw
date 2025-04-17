@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML5 API Példák</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f9ff; color: #333; padding: 1rem; }
+    h1, h2, h3 { color: #55acee; }
+    nav { display: flex; list-style: none; padding: 0; background: #a3e3ff; margin-bottom: 1rem; }
+    nav li { margin: 0; }
+    nav li a { display: block; padding: 1rem; text-decoration: none; color: #333; }
+    nav li a:hover, nav ul li a.active { background: #f3a6c0; color: white; }
+    nav ul { display: flex; list-style: none; padding: 0; background: #a3e3ff; margin-bottom: 1rem; }
+    nav ul li { margin: 0; }
+    nav ul li a { display: block; padding: 1rem; text-decoration: none; color: #333; }
+    nav ul li a:hover, nav ul li a.active { background: #f3a6c0; color: white; }
+    section { margin-bottom: 2rem; padding: 1rem; background: white; border-radius: 0.5rem; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    canvas, svg, #dragMe, #dropHere { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Web-programozás-1 Előadás Házi feladat</h1>
+  </header>
+<nav>
+  <li><a href="index.html">Vissza</a></li>
+</nav>
+  <nav>
+    <ul>
+      <li><a href="#webstorage">Web Storage</a></li>
+      <li><a href="#webworker">Web Worker</a></li>
+      <li><a href="#sse">SSE</a></li>
+      <li><a href="#geo">Geolocation</a></li>
+      <li><a href="#drag">Drag & Drop</a></li>
+      <li><a href="#canvas">Canvas</a></li>
+      <li><a href="#svg">SVG</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="webstorage">
+      <h3>Web Storage</h3>
+      <input type="text" id="storageInput" placeholder="Írj valamit...">
+      <button onclick="saveToStorage()">Mentés</button>
+      <p id="storedText"></p>
+    </section>
+
+    <section id="webworker">
+      <h3>Web Worker</h3>
+      <button onclick="startWorker()">Számolás indítása</button>
+      <p id="workerResult"></p>
+    </section>
+
+    <section id="sse">
+      <h3>Server-Sent Events</h3>
+      <p id="sseOutput">(A működéshez szükséges egy szerveroldali fájl)</p>
+    </section>
+
+    <section id="geo">
+      <h3>Geolocation</h3>
+      <button onclick="getLocation()">Helyzet lekérése</button>
+      <p id="location"></p>
+    </section>
+
+    <section id="drag">
+      <h3>Drag and Drop</h3>
+      <div id="dragMe" draggable="true" ondragstart="drag(event)" style="width:100px;height:100px;background:pink;">Húzz el</div>
+      <div id="dropHere" ondrop="drop(event)" ondragover="allowDrop(event)" style="width:200px;height:100px;border:1px dashed gray;margin-top:10px;">Ide dobj</div>
+    </section>
+
+    <section id="canvas">
+      <h3>Canvas</h3>
+      <canvas id="myCanvas" width="200" height="100" style="border:1px solid;"></canvas>
+    </section>
+
+    <section id="svg">
+      <h3>SVG</h3>
+      <svg width="200" height="100">
+        <circle cx="50" cy="50" r="40" style="fill:#ff99cc;stroke:black;stroke-width:2;" />
+      </svg>
+    </section>
+  </main>
+
+  <footer>
+    <p>Készítette: Kancsár Balázs (DP6X8F) és Alibi Lili (REDACTED)</p>
+  </footer>
+
+  <script>
+    function saveToStorage() {
+      const text = document.getElementById("storageInput").value;
+      localStorage.setItem("demoText", text);
+      document.getElementById("storedText").innerText = "Tárolt érték: " + text;
+    }
+    window.onload = () => {
+      const stored = localStorage.getItem("demoText");
+      if (stored) document.getElementById("storedText").innerText = "Tárolt érték: " + stored;
+    }
+
+    let worker;
+    function startWorker() {
+      if (typeof(Worker) !== "undefined") {
+        if (!worker) worker = new Worker("worker.js");
+        worker.onmessage = function(e) {
+          document.getElementById("workerResult").innerHTML = "Szám: " + e.data;
+        };
+      } else {
+        document.getElementById("workerResult").innerHTML = "Nem támogatott.";
+      }
+    }
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          pos => document.getElementById("location").innerHTML = `Szélesség: ${pos.coords.latitude}, Hosszúság: ${pos.coords.longitude}`,
+          err => document.getElementById("location").innerHTML = "Hiba: " + err.message
+        );
+      } else {
+        document.getElementById("location").innerHTML = "Nem támogatott.";
+      }
+    }
+
+    function allowDrop(e) { e.preventDefault(); }
+    function drag(e) { e.dataTransfer.setData("text", e.target.id); }
+    function drop(e) {
+      e.preventDefault();
+      const data = e.dataTransfer.getData("text");
+      e.target.appendChild(document.getElementById(data));
+    }
+
+    const canvas = document.getElementById("myCanvas");
+    const ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#66ccff";
+    ctx.fillRect(10, 10, 150, 75);
+    ctx.strokeStyle = "black";
+    ctx.strokeRect(10, 10, 150, 75);
+  </script>
+</body>
+</html>
