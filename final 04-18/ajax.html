@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AJAX CRUD Interface</title>
+  <script src="ajax.js" defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #e6f2ff;
+    }
+    h1 {
+      color: #007bff;
+    }
+    input, button {
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      width: 100%;
+      max-width: 400px;
+      display: block;
+    }
+    .section {
+      margin-bottom: 2rem;
+    }
+    .results {
+      margin-top: 1rem;
+      background: #f4f9ff;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>AJAX CRUD Interface</h1>
+  <nav>
+    <li><a href="index.html">Vissza</a></li>
+  </nav>
+
+  <div class="section">
+    <h2>Adatok olvasása</h2>
+    <input type="text" id="readCode" placeholder="Enter your full code (Neptun + secret)">
+    <button onclick="readData()">Read All</button>
+    <div class="results" id="readResults"></div>
+  </div>
+
+  <div class="section">
+    <h2>Új adatok létrehozása</h2>
+    <input type="text" id="createName" placeholder="Name">
+    <input type="text" id="createHeight" placeholder="Height">
+    <input type="text" id="createWeight" placeholder="Weight">
+    <input type="text" id="createCode" placeholder="Code (same as Read)">
+    <button onclick="createData()">Create</button>
+    <div class="results" id="createFeedback"></div>
+  </div>
+
+  <div class="section">
+    <h2>Adatok frissítése</h2>
+    <input type="text" id="updateId" placeholder="Record ID to update">
+    <button onclick="getDataForId()">Get Data for ID</button>
+    <input type="text" id="updateName" placeholder="Updated Name">
+    <input type="text" id="updateHeight" placeholder="Updated Height">
+    <input type="text" id="updateWeight" placeholder="Updated Weight">
+    <input type="text" id="updateCode" placeholder="Code (same as Read)">
+    <button onclick="updateData()">Update</button>
+    <div class="results" id="updateFeedback"></div>
+  </div>
+
+  <div class="section">
+    <h2>Adatok törlése</h2>
+    <input type="text" id="deleteId" placeholder="Record ID to delete">
+    <input type="text" id="deleteCode" placeholder="Code (same as Read)">
+    <button onclick="deleteData()">Delete</button>
+    <div class="results" id="deleteFeedback"></div>
+  </div>
+</body>
+</html>

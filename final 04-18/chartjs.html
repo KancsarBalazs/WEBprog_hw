@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ChartJS Table Visualization</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f0f9ff;
+    }
+    table {
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: center;
+      cursor: pointer;
+    }
+    tr:hover {
+      background-color: #e3f3ff;
+    }
+    tr.selected {
+      background-color: #a0e0ff;
+    }
+  </style>
+</head>
+<body>
+  <h1>ChartJS Diagramm</h1>
+  <nav>
+    <li><a href="index.html">Vissza</a></li>
+  </nav>
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>Osz. 1</th><th>Osz. 2</th><th>Osz. 3</th><th>Osz. 4</th><th>Osz. 5</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>12</td><td>19</td><td>3</td><td>5</td><td>2</td></tr>
+      <tr><td>7</td><td>11</td><td>8</td><td>14</td><td>6</td></tr>
+      <tr><td>9</td><td>13</td><td>6</td><td>2</td><td>10</td></tr>
+      <tr><td>4</td><td>17</td><td>1</td><td>8</td><td>3</td></tr>
+      <tr><td>10</td><td>15</td><td>9</td><td>7</td><td>12</td></tr>
+    </tbody>
+  </table>
+
+  <canvas id="lineChart" width="600" height="300"></canvas>
+
+  <script>
+    const table = document.getElementById("dataTable");
+    const ctx = document.getElementById("lineChart").getContext("2d");
+    let chart;
+
+    table.addEventListener("click", function(e) {
+      const row = e.target.closest("tr");
+      if (!row || !row.parentNode.matches("tbody")) return;
+
+      // Deselect previous
+      document.querySelectorAll("tbody tr").forEach(r => r.classList.remove("selected"));
+      row.classList.add("selected");
+
+      const values = Array.from(row.children).map(cell => parseFloat(cell.textContent));
+      const labels = values.map((_, i) => `Col ${i + 1}`);
+
+      if (chart) chart.destroy();
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Selected Row Data',
+            data: values,
+            borderColor: '#ff7cbf',
+            backgroundColor: '#ffb9db55',
+            fill: true,
+            tension: 0.2
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
